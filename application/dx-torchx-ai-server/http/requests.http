@@ -1,0 +1,20 @@
+### authenticate
+POST localhost:3000/api/authenticate
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "karol.kornecki@gmail.com",
+  "password": "lekarz"
+}
+
+### logout
+POST localhost:3000/api/logout
+
+### Get patient page
+GET localhost:3000/api/patients?page=0&pageSize=5
+Accept: application/json
+
+### Get patient image
+GET localhost:3000/api/images/00000053_001
+Accept: image/png

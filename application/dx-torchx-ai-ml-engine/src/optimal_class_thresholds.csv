@@ -1,0 +1,15 @@
+Class,Threshold
+Atelectasis,0.094
+Cardiomegaly,0.057
+Effusion,0.106
+Infiltration,0.166
+Mass,0.053
+Nodule,0.062
+Pneumonia,0.012
+Pneumothorax,0.062
+Consolidation,0.046
+Edema,0.017
+Emphysema,0.023
+Fibrosis,0.015
+Pleural_Thickening,0.044
+Hernia,0.002

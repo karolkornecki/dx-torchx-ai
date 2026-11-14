@@ -1,0 +1,13 @@
+<mat-card class="header">
+  <div class="header-container">
+    <div>
+      <img ngSrc="logo.png" alt="" height="80" width="80" />
+    </div>
+    <div>
+      Jestes zalogowany jako:&nbsp;{{ getUser() }}
+      <div class="logout-btn">
+        <button mat-flat-button (click)="logout()">wyloguj</button>
+      </div>
+    </div>
+  </div>
+</mat-card>

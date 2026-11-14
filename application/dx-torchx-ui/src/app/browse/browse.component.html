@@ -1,0 +1,200 @@
+<app-header />
+<div class="browse-container">
+  <mat-card class="browse-card">
+    <h1>Lista pacjentów zbioru testowego</h1>
+  </mat-card>
+
+  <div class="accordion-wrapper ">
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let patient of patients" (opened)="onPanelOpened(patient.patientId)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Pacjęt #{{ patient.patientId }}
+          </mat-panel-title>
+          <mat-panel-description>
+            Płeć: {{ patient.patientGender == 'F' ? 'kobieta' : 'mężczyzna' }}
+          </mat-panel-description>
+          <mat-panel-description>
+            Liczba zdjęć: {{ patient.imagesNumber }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div *ngFor="let record of patient.records; let last = last">
+          <div class="record-info">
+            <div class="left-column bold">
+              <p>Age: {{ record.patientAge }}</p>
+              <p>Follow-up: {{ record.followUp }}</p>
+              <p>View: {{ record.viewPosition }}</p>
+              <p>Image: {{ record.image }}</p>
+              <div>
+                <img [src]="getImage(record.image)" *ngIf="getImage(record.image)" alt="Image" class="x-chest-image" />
+              </div>
+            </div>
+
+            <div class="right-column">
+              <table class="width-100">
+                <tr>
+                  <td class="bold">Schorzenie</td>
+                  <td class="bold align-center">Diagnoza<br />lekarzy</td>
+                  <td *ngIf="hasImagePrediction(record.image)" class="bold align-center">Predykcja<br />systemu</td>
+                </tr>
+                <tr>
+                  <td>Cardiomegaly:</td>
+                  <td class="align-center"
+                      [ngClass]="getDiseaseStyle(record.cardiomegaly)">{{ getDiseaseLabel(record.cardiomegaly) }}
+                  </td>
+                  <td *ngIf="hasImagePrediction(record.image)"
+                      [ngClass]="getDiseaseStyle(getImagePrediction(record.image, 'Cardiomegaly'))"
+                      class="align-center">{{ getDiseaseLabel(getImagePrediction(record.image, 'Cardiomegaly')) }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Emphysema:</td>
+                  <td class="align-center"
+                      [ngClass]="getDiseaseStyle(record.emphysema)">{{ getDiseaseLabel(record.emphysema) }}
+                  </td>
+                  <td *ngIf="hasImagePrediction(record.image)"
+                      [ngClass]="getDiseaseStyle(getImagePrediction(record.image, 'Emphysema'))"
+                      class="align-center">{{ getDiseaseLabel(getImagePrediction(record.image, 'Emphysema')) }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Effusion:</td>
+                  <td class="align-center"
+                      [ngClass]="getDiseaseStyle(record.effusion)">{{ getDiseaseLabel(record.effusion) }}
+                  </td>
+                  <td *ngIf="hasImagePrediction(record.image)"
+                      [ngClass]="getDiseaseStyle(getImagePrediction(record.image, 'Effusion'))"
+                      class="align-center">{{ getDiseaseLabel(getImagePrediction(record.image, 'Effusion')) }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Hernia:</td>
+                  <td class="align-center"
+                      [ngClass]="getDiseaseStyle(record.hernia)">{{ getDiseaseLabel(record.hernia) }}
+                  </td>
+                  <td *ngIf="hasImagePrediction(record.image)"
+                      [ngClass]="getDiseaseStyle(getImagePrediction(record.image, 'Hernia'))"
+                      class="align-center">{{ getDiseaseLabel(getImagePrediction(record.image, 'Hernia')) }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Infiltration:</td>
+                  <td class="align-center"
+                      [ngClass]="getDiseaseStyle(record.infiltration)">{{ getDiseaseLabel(record.infiltration) }}
+                  </td>
+                  <td *ngIf="hasImagePrediction(record.image)"
+                      [ngClass]="getDiseaseStyle(getImagePrediction(record.image, 'Infiltration'))"
+                      class="align-center">{{ getDiseaseLabel(getImagePrediction(record.image, 'Infiltration')) }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Mass:</td>
+                  <td class="align-center" [ngClass]="getDiseaseStyle(record.mass)">{{ getDiseaseLabel(record.mass) }}
+                  </td>
+                  <td *ngIf="hasImagePrediction(record.image)"
+                      [ngClass]="getDiseaseStyle(getImagePrediction(record.image, 'Mass'))"
+                      class="align-center">{{ getDiseaseLabel(getImagePrediction(record.image, 'Mass')) }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Nodule:</td>
+                  <td class="align-center"
+                      [ngClass]="getDiseaseStyle(record.nodule)">{{ getDiseaseLabel(record.nodule) }}
+                  </td>
+                  <td *ngIf="hasImagePrediction(record.image)"
+                      [ngClass]="getDiseaseStyle(getImagePrediction(record.image, 'Nodule'))"
+                      class="align-center">{{ getDiseaseLabel(getImagePrediction(record.image, 'Nodule')) }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Atelectasis:</td>
+                  <td class="align-center"
+                      [ngClass]="getDiseaseStyle(record.atelectasis)">{{ getDiseaseLabel(record.atelectasis) }}
+                  </td>
+                  <td *ngIf="hasImagePrediction(record.image)"
+                      [ngClass]="getDiseaseStyle(getImagePrediction(record.image, 'Atelectasis'))"
+                      class="align-center">{{ getDiseaseLabel(getImagePrediction(record.image, 'Atelectasis')) }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Pneumothorax:</td>
+                  <td class="align-center"
+                      [ngClass]="getDiseaseStyle(record.pneumothorax)">{{ getDiseaseLabel(record.pneumothorax) }}
+                  </td>
+                  <td *ngIf="hasImagePrediction(record.image)"
+                      [ngClass]="getDiseaseStyle(getImagePrediction(record.image, 'Pneumothorax'))"
+                      class="align-center">{{ getDiseaseLabel(getImagePrediction(record.image, 'Pneumothorax')) }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Pleural Thickening:</td>
+                  <td class="align-center"
+                      [ngClass]="getDiseaseStyle(record.pleuralThickening)">{{ getDiseaseLabel(record.pleuralThickening) }}
+                  </td>
+                  <td *ngIf="hasImagePrediction(record.image)"
+                      [ngClass]="getDiseaseStyle(getImagePrediction(record.image, 'Pleural_Thickening'))"
+                      class="align-center">{{ getDiseaseLabel(getImagePrediction(record.image, 'Pleural_Thickening')) }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Pneumonia:</td>
+                  <td class="align-center"
+                      [ngClass]="getDiseaseStyle(record.pneumonia)">{{ getDiseaseLabel(record.pneumonia) }}
+                  </td>
+                  <td *ngIf="hasImagePrediction(record.image)"
+                      class="align-center"
+                      [ngClass]="getDiseaseStyle(getImagePrediction(record.image, 'Pneumonia'))"
+                  >{{ getDiseaseLabel(getImagePrediction(record.image, 'Pneumonia')) }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Fibrosis:</td>
+                  <td class="align-center"
+                      [ngClass]="getDiseaseStyle(record.fibrosis)">{{ getDiseaseLabel(record.fibrosis) }}
+                  </td>
+                  <td *ngIf="hasImagePrediction(record.image)"
+                      class="align-center"
+                      [ngClass]="getDiseaseStyle(getImagePrediction(record.image, 'Fibrosis'))"
+                  >{{ getDiseaseLabel(getImagePrediction(record.image, 'Fibrosis')) }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Edema:</td>
+                  <td class="align-center"
+                      [ngClass]="getDiseaseStyle(record.edema)">{{ getDiseaseLabel(record.edema) }}
+                  </td>
+                  <td *ngIf="hasImagePrediction(record.image)"
+                      [ngClass]="getDiseaseStyle(getImagePrediction(record.image, 'Edema'))"
+                      class="align-center">{{ getDiseaseLabel(getImagePrediction(record.image, 'Edema')) }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Consolidation:</td>
+                  <td class="align-center"
+                      [ngClass]="getDiseaseStyle(record.consolidation)">{{ getDiseaseLabel(record.consolidation) }}
+                  </td>
+                  <td *ngIf="hasImagePrediction(record.image)"
+                      [ngClass]="getDiseaseStyle(getImagePrediction(record.image, 'Consolidation'))"
+                      class="align-center">{{ getDiseaseLabel(getImagePrediction(record.image, 'Consolidation')) }}
+                  </td>
+                </tr>
+              </table>
+              <div class="center-wrapper">
+                <button *ngIf="!hasImagePrediction(record.image)" mat-flat-button color="secondary" class="full-width"
+                        (click)="diagnose(record.image)">Pokaż
+                  diagnoze systemu
+                </button>
+              </div>
+            </div>
+          </div>
+          <hr *ngIf="!last" class="hr" />
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <mat-paginator [length]="total" [pageSize]="10" (page)="loadPatients($event.pageIndex, $event.pageSize)">
+    </mat-paginator>
+  </div>
+</div>
+

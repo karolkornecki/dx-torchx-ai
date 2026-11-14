@@ -1,0 +1,20 @@
+### authenticate
+POST localhost:8080/api/authenticate
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "michal.medyczny@dxtorchx.edu.pl",
+  "password": "lekarz"
+}
+
+### logout
+POST localhost:8080/api/logout
+
+### Get patient page
+GET localhost:8080/api/patients?page=0&pageSize=5
+Accept: application/json
+
+### Get patient image
+GET localhost:8080/api/images/00000053_001
+Accept: image/png

@@ -1,0 +1,46 @@
+<app-header />
+<div class="diagnose-container">
+  <mat-card class="diagnose-card">
+    <h1>Diagnostyka</h1>
+  </mat-card>
+  <mat-card class="diagnose-card">
+    <h3>Dodaj zdjęcie RTG w formacie PNG</h3>
+  </mat-card>
+  <input type="file" #fileInput hidden (change)="onFileSelected($event)" accept="image/png">
+  <button mat-icon-button matSuffix (click)="fileInput.click()" type="button">
+    <mat-icon>upload</mat-icon>
+  </button>
+  <img *ngIf="!!filePreviewUrl" [src]="filePreviewUrl" alt="Preview" width="700" />
+  <label>{{fileName}}</label>
+  <button *ngIf="!!base64Image" mat-flat-button (click)="upload()">Uruchom diagnostykę</button>
+  <mat-card id="diagnose-table" class="diagnose-card margin-bottom" *ngIf="diagnosisPredictions.length > 0">
+    <table>
+      <tr>
+        <td class="result-header">
+          Schorzenie
+        </td>
+        <td class="result-header">
+          Prawdopodobieństwo
+        </td>
+        <td class="result-header">
+          Klasyfikacja
+        </td>
+        <td class="result-header">
+          Diagnoza lekarzy
+        </td>
+        <td class="result-header">
+          Próg klasyfikacji
+        </td>
+      </tr>
+      <tr *ngFor="let record of diagnosisPredictions">
+        <td>{{ record.class_name }}</td>
+        <td>{{ record.y_prob }}</td>
+        <td [ngClass]="getDiseaseStyle(record.y_predicted)">{{ getDiseaseLabel(record.y_predicted) }}</td>
+        <td [ngClass]="getDiseaseStyle(record.y_true)">{{ getDiseaseLabel(record.y_true) }}</td>
+        <td>{{ record.threshold }}</td>
+      </tr>
+    </table>
+  </mat-card>
+  <button *ngIf="diagnosisPredictions.length > 0" mat-flat-button (click)="reset()">Wyczyść</button>
+</div>
+
